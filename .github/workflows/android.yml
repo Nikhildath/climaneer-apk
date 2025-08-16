@@ -4,55 +4,35 @@ on:
   push:
     branches:
       - main
-  pull_request:
+  workflow_dispatch:
 
 jobs:
-  build-android:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      # Install Cordova
-      - name: Install Cordova
+      - name: Install Cordova CLI
         run: npm install -g cordova
 
-      # Setup Java 17 (needed for Gradle 9.0.0+)
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
+      - name: Install project dependencies
+        run: npm install
 
-      # Setup Android SDK
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Add Android platform
+        run: cordova platform add android@12
 
-      # Accept Android SDK Licenses
-      - name: Accept Android licenses
-        run: yes | sdkmanager --licenses || true
-
-      # Add Android platform if not present
-      - name: Ensure Android platform
-        run: |
-          if [ ! -d "platforms/android" ]; then
-            cordova platform add android
-          fi
-
-      # Build release APK
-      - name: Build APK
+      - name: Build Android APK
         run: cordova build android --release
 
-      # Upload APK as GitHub artifact
-      - name: Upload APK
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: cordova-release-apk
+          name: Climaneer-APK
           path: platforms/android/app/build/outputs/apk/release/app-release.apk
