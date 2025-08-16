@@ -1,12 +1,4 @@
-# Cordova/Android build artifacts
-/platforms/
-/plugins/
-/node_modules/
-/www/cordova*.js
-.DS_Store
-.vscode/
-.idea/
-.gradle/
-/build/
-/app/build/
-/package-lock.json
+node_modules/
+platforms/
+plugins/
+www/*.log
