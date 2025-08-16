@@ -1,37 +1,33 @@
-name: Build Cordova Android APK
+name: Build Cordova App
 
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: '18'
 
       - name: Install Cordova
         run: npm install -g cordova
 
-      - name: Install Project Dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: Add Android Platform
-        run: cordova platform add android
-
-      - name: Build APK
+      - name: Build Android APK
         run: cordova build android --release
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v3
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: ClimaNeer-APK
+          name: Climaneer-APK
           path: platforms/android/app/build/outputs/apk/release/*.apk
