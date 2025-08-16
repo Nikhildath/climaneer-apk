@@ -1,0 +1,9 @@
+{
+  "name": "climaneer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ClimaNeer Cordova WebView wrapper",
+  "scripts": {
+    "build:android": "cordova platform add android && cordova build android"
+  }
+}
